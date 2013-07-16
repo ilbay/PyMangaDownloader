@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'PyMangaDownloader.ui'
 #
-# Created: Tue Jul 16 04:27:48 2013
+# Created: Tue Jul 16 04:30:52 2013
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -44,6 +44,9 @@ class Ui_PyMangaDownloader(object):
         self.statusbar = QtGui.QStatusBar(PyMangaDownloader)
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
         PyMangaDownloader.setStatusBar(self.statusbar)
+        self.toolBar = QtGui.QToolBar(PyMangaDownloader)
+        self.toolBar.setObjectName(_fromUtf8("toolBar"))
+        PyMangaDownloader.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
         self.actionNew_Manga = QtGui.QAction(PyMangaDownloader)
         self.actionNew_Manga.setObjectName(_fromUtf8("actionNew_Manga"))
         self.menuFile.addAction(self.actionNew_Manga)
@@ -53,7 +56,8 @@ class Ui_PyMangaDownloader(object):
         QtCore.QMetaObject.connectSlotsByName(PyMangaDownloader)
 
     def retranslateUi(self, PyMangaDownloader):
-        PyMangaDownloader.setWindowTitle(_translate("PyMangaDownloader", "MainWindow", None))
+        PyMangaDownloader.setWindowTitle(_translate("PyMangaDownloader", "PyMangaDownloader", None))
         self.menuFile.setTitle(_translate("PyMangaDownloader", "File", None))
+        self.toolBar.setWindowTitle(_translate("PyMangaDownloader", "toolBar", None))
         self.actionNew_Manga.setText(_translate("PyMangaDownloader", "New Manga", None))
 

@@ -10,14 +10,12 @@ class PyMangaDownloader(QMainWindow):
                 self.ui.setupUi(self)
 
                 self.setCentralWidget(self.ui.mangaTableWidget)
-                self.setWindowTitle("PyMangaDownloader")
 
                 headerList = QStringList()
                 headerList.append(QString("Manga"))
                 headerList.append(QString("Issue"))
                 headerList.append(QString("Status"))
                 self.ui.mangaTableWidget.setHorizontalHeaderLabels(headerList)
-
                 
                 newMangaAction = QAction(QIcon("./icon/add.ico"),'New Manga', self)
                 newMangaAction.setShortcut('Ctrl+N')
@@ -29,10 +27,9 @@ class PyMangaDownloader(QMainWindow):
 
                 aboutAction = QAction(QIcon("./icon/about.ico"),'About', self)
 
-                self.toolBar = self.addToolBar('ToolBar')
-                self.toolBar.addAction(newMangaAction)
-                self.toolBar.addAction(removeMangaAction)
-                self.toolBar.addSeparator()
-                self.toolBar.addAction(preferencesAction)
-                self.toolBar.addSeparator()
-                self.toolBar.addAction(aboutAction)
+                self.ui.toolBar.addAction(newMangaAction)
+                self.ui.toolBar.addAction(removeMangaAction)
+                self.ui.toolBar.addSeparator()
+                self.ui.toolBar.addAction(preferencesAction)
+                self.ui.toolBar.addSeparator()
+                self.ui.toolBar.addAction(aboutAction)

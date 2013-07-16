@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'PyMangaDownloader.ui'
 #
-# Created: Tue Jul 16 03:40:58 2013
+# Created: Tue Jul 16 04:27:48 2013
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!

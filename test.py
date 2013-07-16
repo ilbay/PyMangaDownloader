@@ -2,21 +2,16 @@ import sys
 from PyQt4.QtGui import QApplication, QMainWindow
 from PyQt4.QtCore import QStringList, QString
 from Ui_PyMangaDownloader import Ui_PyMangaDownloader
+from PyMangaDownloader import PyMangaDownloader
 
-app = QApplication(sys.argv)
-window = QMainWindow()
-ui = Ui_PyMangaDownloader()
-ui.setupUi(window)
 
-window.setCentralWidget(ui.mangaTableWidget)
+def main():
+        app = QApplication(sys.argv)
 
-list = QStringList()
-list.append(QString("Manga"))
-list.append(QString("Issue"))
-list.append(QString("Status"))
+        mangaWindow = PyMangaDownloader()
+        mangaWindow.show()
 
-ui.mangaTableWidget.setHorizontalHeaderLabels(list)
+        sys.exit(app.exec_())
 
-window.show()
-sys.exit(app.exec_())
-
+if __name__ == "__main__":
+        main()

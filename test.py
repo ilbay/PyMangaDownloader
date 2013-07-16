@@ -1,14 +1,13 @@
 import sys
 from PyQt4.QtGui import QApplication, QMainWindow
 from PyQt4.QtCore import QStringList, QString
-from Ui_PyMangaDownloader import Ui_PyMangaDownloader
-from PyMangaDownloader import PyMangaDownloader
+from MainWindow import MainWindow
 
 
 def main():
         app = QApplication(sys.argv)
 
-        mangaWindow = PyMangaDownloader()
+        mangaWindow = MainWindow()
         mangaWindow.show()
 
         sys.exit(app.exec_())

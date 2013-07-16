@@ -1,12 +1,12 @@
 from PyQt4.QtGui import QMainWindow,QAction,QIcon
 from PyQt4.QtCore import QStringList,QString
-from Ui_PyMangaDownloader import Ui_PyMangaDownloader
+from Ui_MainWindow import Ui_MainWindow
 
-class PyMangaDownloader(QMainWindow):
+class MainWindow(QMainWindow):
         def __init__(self):
                 QMainWindow.__init__(self)
                 
-                self.ui = Ui_PyMangaDownloader()
+                self.ui = Ui_MainWindow()
                 self.ui.setupUi(self)
 
                 self.setCentralWidget(self.ui.mangaTableWidget)

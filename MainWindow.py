@@ -1,6 +1,7 @@
 from PyQt4.QtGui import QMainWindow,QAction,QIcon
 from PyQt4.QtCore import QStringList,QString
 from Ui_MainWindow import Ui_MainWindow
+from NewMangaDialog import NewMangaDialog
 
 class MainWindow(QMainWindow):
         def __init__(self):
@@ -10,6 +11,7 @@ class MainWindow(QMainWindow):
                 self.ui.setupUi(self)
 
                 self.setCentralWidget(self.ui.mangaTableWidget)
+                self.newMangaDialog = NewMangaDialog()
 
                 headerList = QStringList()
                 headerList.append(QString("Manga"))
@@ -19,6 +21,7 @@ class MainWindow(QMainWindow):
                 
                 newMangaAction = QAction(QIcon("./icon/add.ico"),'New Manga', self)
                 newMangaAction.setShortcut('Ctrl+N')
+                newMangaAction.triggered.connect(self.newMangaDialog.show)
 
                 removeMangaAction = QAction(QIcon("./icon/delete.ico"),'Remove Manga', self)
                 removeMangaAction.setShortcut('Delete')

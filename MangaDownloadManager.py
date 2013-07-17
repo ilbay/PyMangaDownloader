@@ -15,6 +15,7 @@ class MangaDownloadManager(QObject):
                 self._mangaLink = None
                 self._completed = False
                 self._mangaName = None
+                self._latestChapter = None
 
         def isCompleted(self):
                 return self._completed
@@ -120,3 +121,10 @@ class MangaDownloadManager(QObject):
                                         chaptersList.append({"url":row.a["href"], "name":row.td.text})
 
                 return chaptersList
+
+        def dump(self):
+                manga = {}
+                manga["name"] = self._mangaName.title()
+                manga["latestChapter"] = self._latestChapter
+                manga["link"] = self._mangaLink
+                return manga

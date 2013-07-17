@@ -1,4 +1,4 @@
-from PyQt4.QtGui import QMainWindow,QAction,QIcon
+from PyQt4.QtGui import QMainWindow,QAction,QIcon,QProgressBar
 from PyQt4.QtCore import QStringList,QString
 from Ui_MainWindow import Ui_MainWindow
 from NewMangaDialog import NewMangaDialog
@@ -36,3 +36,7 @@ class MainWindow(QMainWindow):
                 self.ui.toolBar.addAction(preferencesAction)
                 self.ui.toolBar.addSeparator()
                 self.ui.toolBar.addAction(aboutAction)
+
+                self.progressBar = QProgressBar(self.ui.statusbar)
+                self.ui.statusbar.addPermanentWidget(self.progressBar)
+                self.progressBar.hide()

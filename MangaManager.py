@@ -5,10 +5,11 @@ import time
 import os
 import zipfile
 from PyQt4.QtCore import QObject,SIGNAL,SLOT
+import shutil
 
-
-class MangaManager:
+class MangaManager(QObject):
         def __init__(self):
+                QObject.__init__(self)
                 self._mangalist = "http://www.mangareader.net/alphabetical"
                 self._mangasite = "http://www.mangareader.net"
                 self._mangaLink = None
@@ -56,18 +57,23 @@ class MangaManager:
                         rows = mangaChaptersList[0].findAll("tr")
                         for row in rows:
                                 if row.a != None:
-                                        if not os.path.isdir(row.td.text):
-                                                os.mkdir(row.td.text)
-                                        print row.td.text + " " + row.a["href"]
                                         self.download(row.a["href"], row.td.text)
 
         def download(self, url, folder):
+                self.emit(SIGNAL("downloadNewChapter"),folder)
+
+                if not os.path.isdir(row.td.text):
+                        os.mkdir(row.td.text)
+
                 downloadUrl = self._mangasite + url
                 mangaChapterPage = urllib2.urlopen(downloadUrl)
                 soup = BeautifulSoup(mangaChapterPage)
 
                 chapters = soup.findAll('select',{'id':'pageMenu'})[0].findAll("option")
                 counter = 0
+                numOfDownloadedPages = 0
+
+                self.emit(SIGNAL("chaptersPageSize"),len(chapters))
 
                 for chapter in chapters:
                         while True:
@@ -81,6 +87,10 @@ class MangaManager:
 
                                         urllib.urlretrieve(mangaImage, folder+"/Page"+str(chapter.text).zfill(4)+".jpg")
                                         counter = 0
+
+                                        numOfDownloadedPages += 1
+                                        self.emit(SIGNAL("newPageDownloaded"),numOfDownloadedPages)
+
                                         break
                                 except IOError, e:
                                         if counter >= 10:
@@ -88,7 +98,13 @@ class MangaManager:
                                         time.sleep(1)
                                         counter += 1
 
+                self.emit(SIGNAL("compressingDownloadedChapter"),folder)
+
                 cbzFile = zipfile.ZipFile(folder+".cbz", 'w')
                 for i in range(len(chapters)):
                         cbzFile.write(folder+"/Page"+str(i+1).zfill(4)+".jpg")
                 cbzFile.close()
+
+                shutil.rmtree(folder)
+
+                self.emit(SIGNAL("downloadingChapterDone"),folder)

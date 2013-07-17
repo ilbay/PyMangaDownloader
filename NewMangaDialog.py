@@ -14,9 +14,9 @@ class NewMangaDialog(QDialog):
                 self.ui.mangaLineEdit.setText("")
                 QDialog.show(self)
         def mangaNameControl(self):
-                mangaName = self.ui.mangaLineEdit.text()
+                mangaName = str(self.ui.mangaLineEdit.text())
                 if len(mangaName) > 0:
-                        self.emit(SIGNAL("mangaRequest"), mangaName)
+                        self.emit(SIGNAL("newMangaRequest"), mangaName)
                         self.close()
                 else:
                         QMessageBox.information(self, QString("Warning"), QString("Manga name space cannot be empty."), QMessageBox.Ok)

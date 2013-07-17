@@ -4,6 +4,8 @@ from BeautifulSoup import BeautifulSoup
 import time
 import os
 import zipfile
+from PyQt4.QtCore import QObject,SIGNAL,SLOT
+
 
 class MangaManager:
         def __init__(self):
@@ -55,7 +57,6 @@ class MangaManager:
                                                 os.mkdir(row.td.text)
                                         print row.td.text + " " + row.a["href"]
                                         self.download(row.a["href"], row.td.text)
-                                        break
 
         def download(self, url, folder):
                 downloadUrl = self._mangasite + url

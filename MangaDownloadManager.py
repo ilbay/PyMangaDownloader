@@ -7,7 +7,7 @@ import zipfile
 from PyQt4.QtCore import QObject,SIGNAL,SLOT
 import shutil
 
-class MangaManager(QObject):
+class MangaDownloadManager(QObject):
         def __init__(self):
                 QObject.__init__(self)
                 self._mangalist = "http://www.mangareader.net/alphabetical"

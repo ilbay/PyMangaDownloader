@@ -1,12 +1,12 @@
 from MainWindow import MainWindow
-from MangaManager import MangaManager
+from MangaDownloadManager import MangaDownloadManager
 from PyQt4.QtCore import QObject,SIGNAL,SLOT
 import threading
 
 class Controller:
         def __init__(self):
                 self.mainWindow = MainWindow()
-                self.mangaManager = MangaManager()
+                self.mangaDownloadManager = MangaDownloadManager()
 
         def show(self):
                 self.mainWindow.show()
@@ -16,17 +16,17 @@ class Controller:
                 QObject.connect(self.mainWindow.mangaDownloadDialog, SIGNAL("downloadAllChapters"), self.downloadAllChapters)
                 QObject.connect(self.mainWindow.mangaDownloadDialog, SIGNAL("downloadLatestChapter"), self.downloadLatestChapter)
 
-                QObject.connect(self.mangaManager,SIGNAL("downloadNewChapter"),self.informUserForNewDownloadingPage)
-                QObject.connect(self.mangaManager,SIGNAL("chaptersPageSize"),self.mainWindow.initializeProgressBar)
-                QObject.connect(self.mangaManager,SIGNAL("newPageDownloaded"),self.mainWindow.updateProgressBar)
-                QObject.connect(self.mangaManager,SIGNAL("compressingDownloadedChapter"),self.informUserForCompressingDownloadedChapter)
-                QObject.connect(self.mangaManager,SIGNAL("downloadingChapterDone"),self.informUserForDownloadedChapter)
+                QObject.connect(self.mangaDownloadManager,SIGNAL("downloadNewChapter"),self.informUserForNewDownloadingPage)
+                QObject.connect(self.mangaDownloadManager,SIGNAL("chaptersPageSize"),self.mainWindow.initializeProgressBar)
+                QObject.connect(self.mangaDownloadManager,SIGNAL("newPageDownloaded"),self.mainWindow.updateProgressBar)
+                QObject.connect(self.mangaDownloadManager,SIGNAL("compressingDownloadedChapter"),self.informUserForCompressingDownloadedChapter)
+                QObject.connect(self.mangaDownloadManager,SIGNAL("downloadingChapterDone"),self.informUserForDownloadedChapter)
 
         def newMangaRequest(self, mangaName):
                 self.mainWindow.updateStatusBar("Looking for " + mangaName + "...")
 
-                if self.mangaManager.searchManga(mangaName):
-                        self.mainWindow.mangaDownloadDialog.show(self.mangaManager.getMangaName(),self.mangaManager.getMangaLink())
+                if self.mangaDownloadManager.searchManga(mangaName):
+                        self.mainWindow.mangaDownloadDialog.show(self.mangaDownloadManager.getMangaName(),self.mangaDownloadManager.getMangaLink())
                 else:
                         print "Manga cannot be found"
 
@@ -42,11 +42,11 @@ class Controller:
                 self.mainWindow.updateStatusBar("Finished")
 
         def downloadAllChapters(self):
-                t = threading.Thread(target = self.mangaManager.downloadAll)
+                t = threading.Thread(target = self.mangaDownloadManager.downloadAll)
                 t.daemon = True
                 t.start()
 
         def downloadLatestChapter(self):
-                t = threading.Thread(target = self.mangaManager.downloadLatestChapter)
+                t = threading.Thread(target = self.mangaDownloadManager.downloadLatestChapter)
                 t.daemon = True
                 t.start()

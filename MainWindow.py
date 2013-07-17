@@ -42,3 +42,14 @@ class MainWindow(QMainWindow):
                 self.progressBar = QProgressBar(self.ui.statusbar)
                 self.ui.statusbar.addPermanentWidget(self.progressBar)
                 self.progressBar.hide()
+
+        def initializeProgressBar(self, size):
+                self.progressBar.setRange(0, size)
+                self.progressBar.setValue(0)
+                self.progressBar.show()
+
+        def updateProgressBar(self, value):
+                self.progressBar.setValue(value)
+
+        def updateStatusBar(self, msg):
+                self.ui.statusbar.showMessage(msg)

@@ -12,9 +12,25 @@ class Controller:
 
         def create(self):
                 QObject.connect(self.mainWindow.newMangaDialog, SIGNAL("newMangaRequest"), self.newMangaRequest)
+                QObject.connect(self.mainWindow.mangaDownloadDialog, SIGNAL("downloadAllChapters"), self.mangaManager.downloadAll)
+
+                QObject.connect(self.mangaManager,SIGNAL("downloadNewChapter"),self.informUserForNewDownloadingPage)
+                QObject.connect(self.mangaManager,SIGNAL("chaptersPageSize"),self.mainWindow.initializeProgressBar)
+                QObject.connect(self.mangaManager,SIGNAL("newPageDownloaded"),self.mainWindow.updateProgressBar)
+                QObject.connect(self.mangaManager,SIGNAL("compressingDownloadedChapter"),self.informUserForCompressingDownloadedChapter)
+                QObject.connect(self.mangaManager,SIGNAL("downloadingChapterDone"),self.informUserForDownloadedChapter)
 
         def newMangaRequest(self, mangaName):
                 if self.mangaManager.searchManga(mangaName):
                         self.mainWindow.mangaDownloadDialog.show(self.mangaManager.getMangaName(),self.mangaManager.getMangaLink())
                 else:
                         print "Manga cannot be found"
+
+        def informUserForNewDownloadingPage(self, chapterName):
+                self.mainWindow.updateStatusBar("Downloading " + chapterName + "...")
+
+        def informUserForCompressingDownloadedChapter(self, chapterName):
+                self.mainWindow.updateStatusBar("Compressing " + chapterName + "...")
+
+        def informUserForDownloadedChapter(self, chapterName):
+                self.mainWindow.updateStatusBar("Finished")

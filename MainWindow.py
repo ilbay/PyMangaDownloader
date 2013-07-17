@@ -2,6 +2,7 @@ from PyQt4.QtGui import QMainWindow,QAction,QIcon,QProgressBar
 from PyQt4.QtCore import QStringList,QString
 from Ui_MainWindow import Ui_MainWindow
 from NewMangaDialog import NewMangaDialog
+from MangaDownloadDialog import MangaDownloadDialog
 
 class MainWindow(QMainWindow):
         def __init__(self):
@@ -12,6 +13,7 @@ class MainWindow(QMainWindow):
 
                 self.setCentralWidget(self.ui.mangaTableWidget)
                 self.newMangaDialog = NewMangaDialog()
+                self.mangaDownloadDialog = MangaDownloadDialog()
 
                 headerList = QStringList()
                 headerList.append(QString("Manga"))

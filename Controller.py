@@ -15,6 +15,6 @@ class Controller:
 
         def newMangaRequest(self, mangaName):
                 if self.mangaManager.searchManga(mangaName):
-                        print "Manga is found"
+                        self.mainWindow.mangaDownloadDialog.show(self.mangaManager.getMangaName(),self.mangaManager.getMangaLink())
                 else:
                         print "Manga cannot be found"

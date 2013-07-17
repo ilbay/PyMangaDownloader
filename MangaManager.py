@@ -21,6 +21,9 @@ class MangaManager:
         def getMangaName(self):
                 return self._mangaName
 
+        def getMangaLink(self):
+                return self._mangasite+self._mangaLink
+
         def searchManga(self, mangaName):
                 self._mangaName = mangaName.replace(" ","").lower()
 

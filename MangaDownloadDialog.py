@@ -10,6 +10,7 @@ class MangaDownloadDialog(QDialog):
                 self.ui.setupUi(self)
 
                 QObject.connect(self.ui.downloadAllChaptersButton, SIGNAL("clicked()"), self.downloadAllChapters)
+                QObject.connect(self.ui.downloadLatestChapterButton, SIGNAL("clicked()"), self.downloadLatestChapter)
 
         def show(self, mangaName, mangaLink):
                 self.ui.mangaNameLineEdit.setText(mangaName)
@@ -20,3 +21,7 @@ class MangaDownloadDialog(QDialog):
         def downloadAllChapters(self):
                 self.close()
                 self.emit(SIGNAL("downloadAllChapters"))
+
+        def downloadLatestChapter(self):
+                self.close()
+                self.emit(SIGNAL("downloadLatestChapter"))

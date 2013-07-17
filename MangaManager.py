@@ -50,6 +50,11 @@ class MangaManager(QObject):
                 for chapter in chaptersList:
                         self.download(chapter["url"], chapter["name"])
 
+        def downloadLatestChapter(self):
+                chaptersList = self.getChaptersAsList()
+                chapter = chaptersList[len(chaptersList)-1]
+                self.download(chapter["url"], chapter["name"])
+
         def download(self, url, folder):
                 self.emit(SIGNAL("downloadNewChapter"),folder)
 

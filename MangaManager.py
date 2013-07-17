@@ -46,18 +46,9 @@ class MangaManager(QObject):
                 return False
 
         def downloadAll(self):
-                downloadUrl = self._mangasite + self._mangaLink
-                mangaChaptersPage = urllib2.urlopen(downloadUrl)
-                soup = BeautifulSoup(mangaChaptersPage)
-
-                mangaChaptersList = soup.findAll('table',{'id':'listing'})
-
-                if len(mangaChaptersList) > 0:
-                        #mangaChaptersList = mangaChaptersList.pop()
-                        rows = mangaChaptersList[0].findAll("tr")
-                        for row in rows:
-                                if row.a != None:
-                                        self.download(row.a["href"], row.td.text)
+                chaptersList = self.getChaptersAsList()
+                for chapter in chaptersList:
+                        self.download(chapter["url"], chapter["name"])
 
         def download(self, url, folder):
                 self.emit(SIGNAL("downloadNewChapter"),folder)
@@ -69,23 +60,23 @@ class MangaManager(QObject):
                 mangaChapterPage = urllib2.urlopen(downloadUrl)
                 soup = BeautifulSoup(mangaChapterPage)
 
-                chapters = soup.findAll('select',{'id':'pageMenu'})[0].findAll("option")
+                pages = soup.findAll('select',{'id':'pageMenu'})[0].findAll("option")
                 counter = 0
                 numOfDownloadedPages = 0
 
-                self.emit(SIGNAL("chaptersPageSize"),len(chapters))
+                self.emit(SIGNAL("chaptersPageSize"),len(pages))
 
-                for chapter in chapters:
+                for page in pages:
                         while True:
                                 try:
-                                        downloadUrl = self._mangasite + chapter["value"]
+                                        downloadUrl = self._mangasite + page["value"]
                                         mangaChapterPage = urllib2.urlopen(downloadUrl)
                                         soup = BeautifulSoup(mangaChapterPage)
 
                                         mangaPage = soup.findAll('img',{'id':'img'})
                                         mangaImage = mangaPage[0]["src"]
 
-                                        urllib.urlretrieve(mangaImage, folder+"/Page"+str(chapter.text).zfill(4)+".jpg")
+                                        urllib.urlretrieve(mangaImage, folder+"/Page"+str(page.text).zfill(4)+".jpg")
                                         counter = 0
 
                                         numOfDownloadedPages += 1
@@ -101,10 +92,26 @@ class MangaManager(QObject):
                 self.emit(SIGNAL("compressingDownloadedChapter"),folder)
 
                 cbzFile = zipfile.ZipFile(folder+".cbz", 'w')
-                for i in range(len(chapters)):
+                for i in range(len(pages)):
                         cbzFile.write(folder+"/Page"+str(i+1).zfill(4)+".jpg")
                 cbzFile.close()
 
                 shutil.rmtree(folder)
 
                 self.emit(SIGNAL("downloadingChapterDone"),folder)
+
+        def getChaptersAsList(self):
+                downloadUrl = self._mangasite + self._mangaLink
+                mangaChaptersPage = urllib2.urlopen(downloadUrl)
+                soup = BeautifulSoup(mangaChaptersPage)
+
+                mangaChaptersList = soup.findAll('table',{'id':'listing'})
+                chaptersList = []
+
+                if len(mangaChaptersList) > 0:
+                        rows = mangaChaptersList[0].findAll("tr")
+                        for row in rows:
+                                if row.a != None:
+                                        chaptersList.append({"url":row.a["href"], "name":row.td.text})
+
+                return chaptersList

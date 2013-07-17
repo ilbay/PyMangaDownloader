@@ -62,8 +62,8 @@ class MangaManager(QObject):
         def download(self, url, folder):
                 self.emit(SIGNAL("downloadNewChapter"),folder)
 
-                if not os.path.isdir(row.td.text):
-                        os.mkdir(row.td.text)
+                if not os.path.isdir(folder):
+                        os.mkdir(folder)
 
                 downloadUrl = self._mangasite + url
                 mangaChapterPage = urllib2.urlopen(downloadUrl)

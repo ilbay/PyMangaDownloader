@@ -1,5 +1,6 @@
 from MainWindow import MainWindow
 from MangaDownloadManager import MangaDownloadManager
+from MangaListManager import MangaListManager
 from PyQt4.QtCore import QObject,SIGNAL,SLOT
 import threading
 
@@ -7,6 +8,7 @@ class Controller:
         def __init__(self):
                 self.mainWindow = MainWindow()
                 self.mangaDownloadManager = MangaDownloadManager()
+                self.mangaListManager = MangaListManager()
 
         def show(self):
                 self.mainWindow.show()

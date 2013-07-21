@@ -21,6 +21,7 @@ class MangaListManager:
                         if mangaName == manga["name"]:
                                 mangaXml.xpath("status")[0].text = manga["status"]
                                 mangaXml.xpath("latestChapter")[0].text = manga["latestChapter"]
+                                mangaXml.xpath("link")[0].text = magan["link"]
                                 break
 
                 mangaFile = open(self._filename, "w")
@@ -42,6 +43,9 @@ class MangaListManager:
                 latestChapterElement = etree.SubElement(mangaElement, "latestChapter")
                 latestChapterElement.text = manga["latestChapter"]
 
+                linkElement = etree.SubElement(mangaElement, "link")
+                linkElement.text = manga["link"]
+
                 mangaFile = open(self._filename, "w")
                 mangaFile.write(etree.tostring(root))
                 mangaFile.close()
@@ -55,5 +59,6 @@ class MangaListManager:
                         dic["name"] = manga.xpath("name")[0].text
                         dic["status"] = manga.xpath("status")[0].text
                         dic["latestChapter"] = manga.xpath("latestChapter")[0].text
+                        dic["link"] = manga.xpath("link")[0].text
                         mangaList.append(dic)
                 return mangaList

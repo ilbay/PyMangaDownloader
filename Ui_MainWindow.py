@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'MainWindow.ui'
 #
-# Created: Wed Jul 24 18:42:21 2013
+# Created: Wed Jul 24 19:06:21 2013
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -29,6 +29,9 @@ class Ui_MainWindow(object):
         MainWindow.resize(640, 480)
         self.mangaTableView = QtGui.QTableView(MainWindow)
         self.mangaTableView.setEnabled(True)
+        self.mangaTableView.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+        self.mangaTableView.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
+        self.mangaTableView.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
         self.mangaTableView.setObjectName(_fromUtf8("mangaTableView"))
         self.mangaTableView.horizontalHeader().setDefaultSectionSize(200)
         self.mangaTableView.horizontalHeader().setStretchLastSection(True)

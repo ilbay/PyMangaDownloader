@@ -11,6 +11,8 @@ class Controller:
                 self.mangaListManager = MangaListManager()
 
         def show(self):
+                mangaList = self.mangaListManager.read()
+                self.mainWindow.displayMangaList(mangaList)
                 self.mainWindow.show()
 
         def create(self):

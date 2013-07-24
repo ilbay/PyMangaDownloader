@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'NewMangaDialog.ui'
 #
-# Created: Wed Jul 24 18:42:21 2013
+# Created: Wed Jul 24 19:06:21 2013
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!

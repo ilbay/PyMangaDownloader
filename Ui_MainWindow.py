@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'MainWindow.ui'
 #
-# Created: Wed Jul 17 21:35:35 2013
+# Created: Wed Jul 24 18:42:21 2013
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,14 +27,11 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.resize(640, 480)
-        self.mangaTableWidget = QtGui.QTableWidget(MainWindow)
-        self.mangaTableWidget.setEnabled(True)
-        self.mangaTableWidget.setColumnCount(3)
-        self.mangaTableWidget.setObjectName(_fromUtf8("mangaTableWidget"))
-        self.mangaTableWidget.setRowCount(0)
-        self.mangaTableWidget.horizontalHeader().setDefaultSectionSize(200)
-        self.mangaTableWidget.horizontalHeader().setMinimumSectionSize(21)
-        self.mangaTableWidget.horizontalHeader().setStretchLastSection(True)
+        self.mangaTableView = QtGui.QTableView(MainWindow)
+        self.mangaTableView.setEnabled(True)
+        self.mangaTableView.setObjectName(_fromUtf8("mangaTableView"))
+        self.mangaTableView.horizontalHeader().setDefaultSectionSize(200)
+        self.mangaTableView.horizontalHeader().setStretchLastSection(True)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 640, 20))
         self.menubar.setObjectName(_fromUtf8("menubar"))

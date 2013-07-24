@@ -1,4 +1,4 @@
-from PyQt4.QtGui import QMainWindow,QAction,QIcon,QProgressBar
+from PyQt4.QtGui import QMainWindow,QAction,QIcon,QProgressBar, QStandardItemModel, QStandardItem
 from PyQt4.QtCore import QStringList,QString
 from Ui_MainWindow import Ui_MainWindow
 from NewMangaDialog import NewMangaDialog
@@ -11,16 +11,16 @@ class MainWindow(QMainWindow):
                 self.ui = Ui_MainWindow()
                 self.ui.setupUi(self)
 
-                self.setCentralWidget(self.ui.mangaTableWidget)
+                self.setCentralWidget(self.ui.mangaTableView)
                 self.newMangaDialog = NewMangaDialog()
                 self.mangaDownloadDialog = MangaDownloadDialog()
 
-                headerList = QStringList()
-                headerList.append(QString("Manga"))
-                headerList.append(QString("Issue"))
-                headerList.append(QString("Status"))
-                self.ui.mangaTableWidget.setHorizontalHeaderLabels(headerList)
-                
+                self.mangaTableModel = QStandardItemModel(0, 3, self)
+                self.mangaTableModel.setHorizontalHeaderItem(0, QStandardItem(QString("Manga")))
+                self.mangaTableModel.setHorizontalHeaderItem(1, QStandardItem(QString("Latest Chapter")))
+                self.mangaTableModel.setHorizontalHeaderItem(2, QStandardItem(QString("Status")))
+                self.ui.mangaTableView.setModel(self.mangaTableModel)
+
                 newMangaAction = QAction(QIcon("./icon/add.ico"),'New Manga', self)
                 newMangaAction.setShortcut('Ctrl+N')
                 newMangaAction.triggered.connect(self.newMangaDialog.show)

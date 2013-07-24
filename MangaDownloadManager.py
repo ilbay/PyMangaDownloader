@@ -6,6 +6,7 @@ import os
 import zipfile
 from PyQt4.QtCore import QObject,SIGNAL,SLOT
 import shutil
+import re
 
 class MangaDownloadManager(QObject):
         def __init__(self):
@@ -27,7 +28,7 @@ class MangaDownloadManager(QObject):
                 return self._mangasite+self._mangaLink
 
         def searchManga(self, mangaName):
-                self._mangaName = mangaName.replace(" ","").lower()
+                self._mangaName = re.sub("\s+", " ", mangaName).lower()
 
                 mangaListPage = urllib2.urlopen(self._mangalist)
 	        soup = BeautifulSoup(mangaListPage)
@@ -38,7 +39,7 @@ class MangaDownloadManager(QObject):
                 for mangaGroup in mangaGroupList:
                         mangaList = mangaGroup.findAll("li")
                         for li in mangaList:
-                                if li.a.text.replace(" ","").lower() == self._mangaName:
+                                if re.sub("\s+", " ", li.a.text).lower() == self._mangaName:
                                         self._mangaLink = li.a["href"]
                                         if li.span != None:
                                                 self._completed = True
@@ -57,7 +58,8 @@ class MangaDownloadManager(QObject):
                 self.download(chapter["url"], chapter["name"])
 
         def download(self, url, folder):
-                self.emit(SIGNAL("downloadNewChapter"),folder)
+                chapter = {"name":self._mangaName, "link":url, "latestChapter":folder, "status":"Updating"}
+                self.emit(SIGNAL("downloadNewChapter"), chapter)
 
                 if not os.path.isdir(folder):
                         os.mkdir(folder)
@@ -104,7 +106,8 @@ class MangaDownloadManager(QObject):
 
                 shutil.rmtree(folder)
 
-                self.emit(SIGNAL("downloadingChapterDone"),folder)
+                chapter["status"] = "Updated"
+                self.emit(SIGNAL("downloadingChapterDone"), chapter)
 
         def getChaptersAsList(self):
                 downloadUrl = self._mangasite + self._mangaLink

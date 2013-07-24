@@ -12,7 +12,7 @@ class Controller:
 
         def show(self):
                 mangaList = self.mangaListManager.read()
-                self.mainWindow.displayMangaList(mangaList)
+                self.mainWindow.addMangaListToMangaTable(mangaList)
                 self.mainWindow.show()
 
         def create(self):
@@ -36,14 +36,16 @@ class Controller:
 
                 self.mainWindow.updateStatusBar("")
 
-        def informUserForNewDownloadingPage(self, chapterName):
-                self.mainWindow.updateStatusBar("Downloading " + chapterName + "...")
+        def informUserForNewDownloadingPage(self, chapter):
+                self.mainWindow.updateStatusBar("Downloading " + chapter["name"] + "...")
+                self.mainWindow.updateMangaTable(chapter)
 
         def informUserForCompressingDownloadedChapter(self, chapterName):
                 self.mainWindow.updateStatusBar("Compressing " + chapterName + "...")
 
-        def informUserForDownloadedChapter(self, chapterName):
+        def informUserForDownloadedChapter(self, chapter):
                 self.mainWindow.updateStatusBar("Finished")
+                self.mainWindow.updateMangaTable(chapter)
 
         def downloadAllChapters(self):
                 t = threading.Thread(target = self.mangaDownloadManager.downloadAll)

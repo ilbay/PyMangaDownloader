@@ -54,17 +54,36 @@ class MainWindow(QMainWindow):
         def updateStatusBar(self, msg):
                 self.ui.statusbar.showMessage(msg)
 
-        def displayMangaList(self, mangaList):
-                for i in range(len(mangaList)):
-                        mangaRow = QStandardItem(QString(mangaList[i]["name"]))
-                        latestChapterRow = QStandardItem(QString(mangaList[i]["latestChapter"]))
-                        statusRow = QStandardItem(QString(mangaList[i]["status"]))
-                        if i%2 == 1:
-                                brush = QBrush(QColor(200, 200, 200))
-                                mangaRow.setBackground(brush)
-                                latestChapterRow.setBackground(brush)
-                                statusRow.setBackground(brush)
+        def updateMangaTable(self, chapter):
+                isFound = False
+                for i in range(self.mangaTableModel.rowCount()):
+                        mangaItem = self.mangaTableModel.item(i)
+                        if mangaItem.text() == chapter["name"]:
+                                self.mangaTableModel.item(i, 1).setText(chapter["latestChapter"])
+                                self.mangaTableModel.item(i, 2).setText(chapter["status"])
+                                isFound = True
+                                break
 
-                        self.mangaTableModel.setItem(i, 0, mangaRow)
-                        self.mangaTableModel.setItem(i, 1, latestChapterRow)
-                        self.mangaTableModel.setItem(i, 2, statusRow)
+                if not isFound:
+                        self.addRowToMangaTable(chapter)
+
+        def addMangaListToMangaTable(self, mangaList):
+                for i in range(len(mangaList)):
+                        self.addRowToMangaTable(mangaList[i])
+
+        def addRowToMangaTable(self, manga):
+                i = self.mangaTableModel.rowCount()
+
+                mangaItem = QStandardItem(QString(manga["name"]))
+                latestChapterItem = QStandardItem(QString(manga["latestChapter"]))
+                statusItem = QStandardItem(QString(manga["status"]))
+
+                brush = QBrush(QColor(255, 255, 255)) if i%2==0 else QBrush(QColor(200, 200, 200))
+
+                mangaItem.setBackground(brush)
+                latestChapterItem.setBackground(brush)
+                statusItem.setBackground(brush)
+
+                self.mangaTableModel.setItem(i, 0, mangaItem)
+                self.mangaTableModel.setItem(i, 1, latestChapterItem)
+                self.mangaTableModel.setItem(i, 2, statusItem)

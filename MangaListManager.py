@@ -62,3 +62,23 @@ class MangaListManager:
                         dic["link"] = manga.xpath("link")[0].text
                         mangaList.append(dic)
                 return mangaList
+
+        def write(self, mangaList):
+                root = etree.Element("mangaList")
+                for manga in mangaList:
+                        mangaElement = etree.SubElement(root, "manga")
+
+                        nameElement = etree.SubElement(mangaElement, "name")
+                        nameElement.text = manga["name"]
+
+                        statusElement = etree.SubElement(mangaElement, "status")
+                        statusElement.text = manga["status"]
+
+                        latestChapterElement = etree.SubElement(mangaElement, "latestChapter")
+                        latestChapterElement.text = manga["latestChapter"]
+
+                        linkElement = etree.SubElement(mangaElement, "link")
+                        linkElement.text = manga["link"]
+
+                tree = etree.ElementTree(root)
+                tree.write(self._filename)

@@ -19,6 +19,7 @@ class Controller:
                 QObject.connect(self.mainWindow.newMangaDialog, SIGNAL("newMangaRequest"), self.newMangaRequest)
                 QObject.connect(self.mainWindow.mangaDownloadDialog, SIGNAL("downloadAllChapters"), self.downloadAllChapters)
                 QObject.connect(self.mainWindow.mangaDownloadDialog, SIGNAL("downloadLatestChapter"), self.downloadLatestChapter)
+                QObject.connect(self.mainWindow, SIGNAL("applicationClosed"), self.mangaListManager.write)
 
                 QObject.connect(self.mangaDownloadManager,SIGNAL("downloadNewChapter"),self.informUserForNewDownloadingPage)
                 QObject.connect(self.mangaDownloadManager,SIGNAL("chaptersPageSize"),self.mainWindow.initializeProgressBar)

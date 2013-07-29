@@ -1,5 +1,5 @@
-from PyQt4.QtGui import QMainWindow,QAction,QIcon,QProgressBar, QStandardItemModel, QStandardItem, QBrush, QColor
-from PyQt4.QtCore import QStringList,QString
+from PyQt4.QtGui import QMainWindow,QAction,QIcon,QProgressBar, QStandardItemModel, QStandardItem, QBrush, QColor, QCloseEvent
+from PyQt4.QtCore import QStringList,QString, SIGNAL
 from Ui_MainWindow import Ui_MainWindow
 from NewMangaDialog import NewMangaDialog
 from MangaDownloadDialog import MangaDownloadDialog
@@ -42,6 +42,17 @@ class MainWindow(QMainWindow):
                 self.progressBar = QProgressBar(self.ui.statusbar)
                 self.ui.statusbar.addPermanentWidget(self.progressBar)
                 self.progressBar.hide()
+
+        def closeEvent(self, QCloseEvent):
+                mangaList = []
+                for i in range(self.mangaTableModel.rowCount()):
+                        mangaList.append({
+                                                "name" : str(self.mangaTableModel.item(i, 0).text()),
+                                                "latestChapter" : str(self.mangaTableModel.item(i, 1).text()),
+                                                "status" : "Updated",
+                                                "link" : "/trial.html"
+                                        })
+                self.emit(SIGNAL("applicationClosed"),mangaList)
 
         def initializeProgressBar(self, size):
                 self.progressBar.setRange(0, size)

@@ -57,6 +57,11 @@ class MangaDownloadManager(QObject):
                 chapter = chaptersList[len(chaptersList)-1]
                 self.download(chapter["url"], chapter["name"])
 
+        def checkForNextIssue(self):
+                chaptersList = self.getChaptersAsList()
+                chapter = {"latestChapter":chaptersList[-1]["name"], "link":chaptersList[-1]["url"], "name":self._mangaName, "status":"Updated"}
+                self.emit(SIGNAL("downloadingChapterDone"), chapter)
+
         def download(self, url, folder):
                 chapter = {"name":self._mangaName, "link":url, "latestChapter":folder, "status":"Updating"}
                 self.emit(SIGNAL("downloadNewChapter"), chapter)

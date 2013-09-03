@@ -19,6 +19,7 @@ class Controller:
                 QObject.connect(self.mainWindow.newMangaDialog, SIGNAL("newMangaRequest"), self.newMangaRequest)
                 QObject.connect(self.mainWindow.mangaDownloadDialog, SIGNAL("downloadAllChapters"), self.downloadAllChapters)
                 QObject.connect(self.mainWindow.mangaDownloadDialog, SIGNAL("downloadLatestChapter"), self.downloadLatestChapter)
+                QObject.connect(self.mainWindow.mangaDownloadDialog, SIGNAL("checkForNextIssue"), self.checkForNextIssue)
                 QObject.connect(self.mainWindow, SIGNAL("applicationClosed"), self.mangaListManager.write)
 
                 QObject.connect(self.mangaDownloadManager,SIGNAL("downloadNewChapter"),self.informUserForNewDownloadingPage)
@@ -48,6 +49,9 @@ class Controller:
                 self.mainWindow.updateStatusBar("Finished")
                 self.mainWindow.updateMangaTable(chapter)
 
+        #def checkForNextChapters(self):
+                #TODO: add something
+
         def downloadAllChapters(self):
                 t = threading.Thread(target = self.mangaDownloadManager.downloadAll)
                 t.daemon = True
@@ -55,5 +59,10 @@ class Controller:
 
         def downloadLatestChapter(self):
                 t = threading.Thread(target = self.mangaDownloadManager.downloadLatestChapter)
+                t.daemon = True
+                t.start()
+
+        def checkForNextIssue(self):
+                t = threading.Thread(target = self.mangaDownloadManager.checkForNextIssue)
                 t.daemon = True
                 t.start()
